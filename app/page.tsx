@@ -31,13 +31,18 @@ export default function Home() {
       return (
         <div className="space-y-6">
           <section>
-            <h1 className="text-2xl font-semibold">Discover</h1>
-            <p className="mt-1 text-sm text-slate-500">Questions built from your saved collection</p>
+            <p className="eyebrow">Discovery Workspace</p>
+            <h1 className="mt-3 text-3xl font-semibold tracking-tight">Discover</h1>
+            <p className="mt-2 max-w-2xl text-sm text-text-secondary">
+              Questions built from your saved collection, with the brand purple reserved for the
+              moments that need action.
+            </p>
           </section>
 
-          <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
-            <h2 className="text-xl font-semibold">{discoverCard.title}</h2>
-            <p className="mt-1 text-sm text-slate-500">{discoverCard.subtitle}</p>
+          <section className="panel p-7">
+            <p className="eyebrow">Generated Card</p>
+            <h2 className="mt-3 text-2xl font-semibold tracking-tight">{discoverCard.title}</h2>
+            <p className="mt-2 text-sm text-text-secondary">{discoverCard.subtitle}</p>
             <div className="mt-5">
               <WorkshopPanel
                 experts={discoverExperts}
@@ -54,15 +59,18 @@ export default function Home() {
 
     return (
       <div className="space-y-6">
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
-          <p className="text-xs font-semibold uppercase tracking-wide text-emerald-600">Saved</p>
-          <h1 className="mt-2 text-3xl font-semibold">{recentSummary.title}</h1>
-          <p className="mt-1 text-sm text-slate-500">{recentSummary.source}</p>
+        <section className="panel p-7">
+          <p className="eyebrow">Saved</p>
+          <h1 className="mt-3 max-w-3xl text-3xl font-semibold tracking-tight">
+            {recentSummary.title}
+          </h1>
+          <p className="mt-2 text-sm text-text-secondary">{recentSummary.source}</p>
         </section>
 
-        <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-soft">
-          <h2 className="text-xl font-semibold">What this content says</h2>
-          <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-700">
+        <section className="panel p-7">
+          <p className="eyebrow">Summary</p>
+          <h2 className="mt-3 text-2xl font-semibold tracking-tight">What this content says</h2>
+          <ul className="mt-4 list-disc space-y-2 pl-5 text-sm leading-6 text-text-secondary">
             {recentSummary.bullets.map((item) => (
               <li key={item}>{item}</li>
             ))}
@@ -76,23 +84,21 @@ export default function Home() {
 
   return (
     <main className="min-h-screen">
-      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 p-6 lg:grid-cols-[220px_1fr]">
-        <aside className="h-fit rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-wide text-slate-500">Workspace</p>
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-6 px-4 py-6 sm:px-6 lg:grid-cols-[240px_1fr] lg:px-8">
+        <aside className="panel h-fit p-4">
+          <p className="eyebrow mb-3">Workspace</p>
           <div className="space-y-2">
             <button
               onClick={() => setView('recent')}
-              className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium ${
-                view === 'recent' ? 'bg-blue-50 text-accent' : 'text-slate-600 hover:bg-slate-100'
-              }`}
+              className="nav-button"
+              data-active={view === 'recent'}
             >
               Recent
             </button>
             <button
               onClick={() => setView('discover')}
-              className={`w-full rounded-lg px-3 py-2 text-left text-sm font-medium ${
-                view === 'discover' ? 'bg-blue-50 text-accent' : 'text-slate-600 hover:bg-slate-100'
-              }`}
+              className="nav-button"
+              data-active={view === 'discover'}
             >
               Discover
             </button>
@@ -104,7 +110,7 @@ export default function Home() {
 
       <button
         onClick={() => setDrawerOpen(true)}
-        className="fixed bottom-6 right-6 z-20 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-lg hover:bg-slate-700"
+        className="btn-primary fixed bottom-6 right-6 z-20 rounded-full px-5 py-3 shadow-soft"
       >
         Flashcards ({cards.length})
       </button>

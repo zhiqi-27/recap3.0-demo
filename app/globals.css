@@ -3,13 +3,177 @@
 @tailwind utilities;
 
 :root {
-  color-scheme: light;
+  color-scheme: light dark;
+  --surface-canvas: #f5f4f2;
+  --surface-base: #fffdf9;
+  --surface-muted: #f7f5f1;
+  --surface-elevated: #ffffff;
+  --surface-overlay: rgba(17, 17, 17, 0.2);
+  --text-primary: #111111;
+  --text-secondary: #4b5563;
+  --text-meta: #9ca3af;
+  --text-disabled: #e5e7eb;
+  --text-inverse: #ffffff;
+  --line-subtle: #e7e4dd;
+  --line-strong: #d8d2c7;
+  --line-accent: rgba(136, 127, 199, 0.28);
+  --interactive-primary: #887fc7;
+  --interactive-primary-pressed: #746cae;
+  --interactive-primary-disabled: #d8d4eb;
+  --interactive-soft: rgba(136, 127, 199, 0.1);
+  --interactive-focus: #a89fd9;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-canvas: #111111;
+    --surface-base: #111111;
+    --surface-muted: #111111;
+    --surface-elevated: #111111;
+    --surface-overlay: rgba(17, 17, 17, 0.58);
+    --text-primary: #f5f5f5;
+    --text-secondary: #d1d5db;
+    --text-meta: #9ca3af;
+    --text-disabled: #6b7280;
+    --text-inverse: #111111;
+    --line-subtle: rgba(255, 255, 255, 0.12);
+    --line-strong: rgba(255, 255, 255, 0.2);
+    --line-accent: rgba(168, 159, 217, 0.36);
+    --interactive-primary: #a89fd9;
+    --interactive-primary-pressed: #958cc8;
+    --interactive-primary-disabled: #5a5674;
+    --interactive-soft: rgba(168, 159, 217, 0.14);
+    --interactive-focus: #a89fd9;
+  }
+}
+
+html {
+  background: var(--surface-canvas);
 }
 
 body {
-  @apply bg-slate-50 text-slate-900 antialiased;
+  @apply min-h-screen bg-surface-canvas text-text-primary antialiased;
+  background-image:
+    radial-gradient(circle at top left, rgba(136, 127, 199, 0.1), transparent 28%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.35), transparent 24%);
+  font-family:
+    'Avenir Next',
+    'Segoe UI',
+    'Helvetica Neue',
+    sans-serif;
 }
 
 button {
-  @apply transition;
+  @apply transition-colors duration-200;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow:
+    0 0 0 2px var(--surface-base),
+    0 0 0 4px var(--interactive-focus);
+}
+
+@layer components {
+  .panel {
+    @apply rounded-[28px] border border-line-subtle bg-surface-elevated shadow-soft;
+  }
+
+  .stack-panel {
+    @apply rounded-2xl border border-line-subtle bg-surface-base;
+  }
+
+  .eyebrow {
+    @apply text-[11px] font-semibold uppercase tracking-[0.22em] text-text-meta;
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-interactive-primary px-4 py-2 text-sm font-semibold text-text-inverse;
+  }
+
+  .btn-primary:hover {
+    background: color-mix(in srgb, var(--interactive-primary) 92%, white);
+  }
+
+  .btn-primary:active {
+    @apply bg-interactive-pressed;
+  }
+
+  .btn-primary:disabled {
+    @apply cursor-not-allowed bg-interactive-disabled;
+    color: color-mix(in srgb, var(--text-inverse) 75%, transparent);
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-line-strong bg-surface-base px-4 py-2 text-sm font-semibold text-text-secondary;
+  }
+
+  .btn-secondary:hover {
+    @apply border-line-accent text-text-primary;
+    background: var(--interactive-soft);
+  }
+
+  .btn-secondary:active {
+    background: color-mix(in srgb, var(--interactive-soft) 88%, black 6%);
+  }
+
+  .btn-secondary:disabled {
+    @apply cursor-not-allowed border-line-subtle text-text-disabled;
+    background: transparent;
+  }
+
+  .nav-button {
+    @apply w-full rounded-2xl border border-transparent px-4 py-3 text-left text-sm font-medium text-text-secondary;
+  }
+
+  .nav-button:hover {
+    @apply border-line-subtle text-text-primary;
+    background: var(--surface-muted);
+  }
+
+  .nav-button[data-active='true'] {
+    @apply border-line-accent text-text-primary;
+    background: var(--interactive-soft);
+  }
+
+  .expert-card {
+    @apply rounded-2xl border border-line-subtle bg-surface-base p-4 text-left;
+  }
+
+  .expert-card:hover {
+    @apply border-line-strong;
+  }
+
+  .expert-card[data-muted='true'] {
+    @apply opacity-60;
+  }
+
+  .expert-card[data-selected='true'] {
+    @apply border-line-accent;
+    background: var(--interactive-soft);
+  }
+
+  .choice-chip {
+    @apply rounded-2xl border border-line-subtle bg-surface-base p-3 text-left text-sm text-text-secondary;
+  }
+
+  .choice-chip:hover {
+    @apply border-line-strong text-text-primary;
+  }
+
+  .choice-chip[data-active='true'] {
+    @apply border-line-accent text-text-primary;
+    background: var(--interactive-soft);
+  }
+}
+
+@supports not (background: color-mix(in srgb, black 50%, white)) {
+  .btn-primary:hover {
+    background: var(--interactive-primary-pressed);
+  }
+
+  .btn-secondary:active {
+    background: var(--interactive-soft);
+  }
 }
